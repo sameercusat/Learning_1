@@ -6,6 +6,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 from src.components.data_trasformation import DataTransformer
+from src.components.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -42,9 +43,13 @@ if __name__ =="__main__":
     obj=DataIngestion()
     train_path,test_path=obj.initiate_data_ingestion()
     tranformation_obj=DataTransformer()
-    print("train_path: ",train_path)
-    print("test_data: ",test_path)
-    x,y,z=tranformation_obj.initiate_data_transformation(train_path,test_path)
+    trainer_obj=ModelTrainer()
+    #print("train_path: ",train_path)
+    #print("test_data: ",test_path)
+    x,y,_=tranformation_obj.initiate_data_transformation(train_path,test_path)
+    r2_score=trainer_obj.modelTrainer(x,y)
+    print(r2_score)
+
 
 
 
