@@ -34,8 +34,53 @@ class ModelTrainer:
                         'Decsion_Tree':DecisionTreeRegressor(),
                         'Support_Vector':SVR(),
                         'Kneighbours':KNeighborsRegressor()}
+                params={'Linear_Regression':{
+                            'fit_intercept': [True, False],
+                            'positive': [True, False] 
+                        },
+                         'Decsion_Tree': {
+                            'criterion': ['squared_error', 'absolute_error'],
+                            'max_depth': [None, 5, 10, 20]
+                            # 'min_samples_split': [2, 5, 10],
+                            # 'min_samples_leaf': [1, 2, 4],
+                            # 'max_features': [None, 'sqrt', 'log2']
+                        },
+                        'Random_Forest':{
+                            'n_estimators': [100, 200, 300],
+                            'criterion': ['squared_error', 'absolute_error'],
+                             'max_depth': [None, 10, 20],
+                            # 'min_samples_split': [2, 5, 10],
+                            # 'min_samples_leaf': [1, 2, 4],
+                            # 'max_features': ['sqrt', 'log2', None],
+                            # 'bootstrap': [True, False]
+                        },
+                        'Support_Vector':{
+                            'kernel': ['linear', 'poly', 'rbf', 'sigmoid'],
+                            'C': [0.1, 1, 10, 100],
+                            'gamma': ['scale', 'auto'],
+                            'degree': [2, 3, 4]  
+                        },
+                        'Ridge':{
+                            'alpha': [0.01, 0.1, 1, 10, 100],
+                            'max_iter': [1000, 5000, 10000],
+                            'fit_intercept': [True, False]
+                            # 'solver': ['auto', 'svd', 'cholesky', 'lsqr', 'sag', 'saga']
+                        },
+                        'Lasso': {
+                            'alpha': [0.01, 0.1, 1, 10, 100],
+                            'fit_intercept': [True, False],
+                            'max_iter': [1000, 5000, 10000] ,
+                            'selection': ['cyclic', 'random']
+                        },
+                        'Kneighbours':{
+                            'n_neighbors': [3, 5, 7, 9],
+                            'weights': ['uniform', 'distance'],
+                            # 'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
+                            'p': [1, 2]  # 1 = Manhattan, 2 = Euclidean
+                        }
+                        }
                 
-                reports:dict=evaluate_model(x_train,y_train,x_test,y_test,models)
+                reports:dict=evaluate_model(x_train,y_train,x_test,y_test,models,param=params)
                 best_model_name,best_model_score=max(reports.items(),key=lambda x:x[1])
                 best_model=models[best_model_name]
 
